@@ -1,43 +1,83 @@
-import React from 'react';
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درع الامتثال الخليجي (GCC Shield)</title>
+    <style>
+        :root { --primary: #1a365d; --secondary: #2c5282; --accent: #38b2ac; --bg: #f7fafc; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; color: #2d3748; }
+        header { background: var(--primary); color: white; padding: 1.5rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 5px solid var(--accent); }
+        .card h3 { margin-top: 0; color: var(--secondary); }
+        .card .value { font-size: 2rem; font-weight: bold; color: var(--primary); }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        th, td { padding: 1rem; text-align: right; border-bottom: 1px solid #edf2f7; }
+        th { background: var(--secondary); color: white; }
+        tr:hover { background-color: #f1f5f9; }
+        .status-badge { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.875rem; background: #c6f6d5; color: #22543d; }
+    </style>
+</head>
+<body>
 
-export default function GCCShield() {
-  return (
-    <div style={{
-      backgroundColor: '#f0fdf4',
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'sans-serif',
-      padding: '20px',
-      direction: 'rtl'
-    }}>
-      <div style={{
-        backgroundColor: 'white',
-        padding: '40px',
-        borderRadius: '15px',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-        textAlign: 'center',
-        maxWidth: '600px'
-      }}>
-        <h1 style={{ color: '#166534', marginBottom: '20px' }}>🛡️ درع الامتثال الخليجي (GCC Shield)</h1>
-        <p style={{ color: '#374151', fontSize: '18px', lineHeight: '1.6' }}>
-          مرحباً بك في المنصة الرائدة لتقييم مخاطر الذكاء الاصطناعي في دول مجلس التعاون الخليجي. 
-          مشروعك الآن يعمل بنجاح على منصة Vercel.
-        </p>
-        
-        <div style={{
-          marginTop: '30px',
-          padding: '15px',
-          backgroundColor: '#dcfce7',
-          borderRadius: '8px',
-          color: '#14532d',
-          fontWeight: 'bold'
-        }}>
-          🟢 الحالة: الموقع متصل وقيد التشغيل الآمن
+<header>
+    <h1>🛡️ درع الامتثال الخليجي (GCC Shield)</h1>
+    <p>المنصة الموحدة لتقييم مخاطر الذكاء الاصطناعي</p>
+</header>
+
+<div class="container">
+    <div class="stats-grid">
+        <div class="card">
+            <h3>مؤشر الامتثال العام</h3>
+            <div class="value">94%</div>
+            <p>حالة التشغيل: <span class="status-badge">آمن</span></p>
         </div>
-      </div>
+        <div class="card">
+            <h3>المخاطر المكتشفة</h3>
+            <div class="value">02</div>
+            <p>تنبيهات منخفضة الخطورة</p>
+        </div>
+        <div class="card">
+            <h3>الجهات المسجلة</h3>
+            <div class="value">124</div>
+            <p>مؤسسة حكومية وخاصة</p>
+        </div>
     </div>
-  );
-}
+
+    <h3>بيانات الامتثال حسب الدول</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>الدولة</th>
+                <th>المعيار الوطني</th>
+                <th>نسبة الالتزام</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>المملكة العربية السعودية</td>
+                <td>SDAIA AI Ethics</td>
+                <td>98%</td>
+                <td><span class="status-badge">ممتاز</span></td>
+            </tr>
+            <tr>
+                <td>الإمارات العربية المتحدة</td>
+                <td>UAE AI Strategy</td>
+                <td>96%</td>
+                <td><span class="status-badge">ممتاز</span></td>
+            </tr>
+            <tr>
+                <td>دولة قطر</td>
+                <td>National AI Strategy</td>
+                <td>92%</td>
+                <td><span class="status-badge">جيد جداً</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
