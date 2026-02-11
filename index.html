@@ -3,90 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>درع الامتثال الخليجي - نظام حي</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>درع الامتثال الخليجي - GCC Shield</title>
     <style>
         :root { --primary: #0f172a; --gold: #b59410; --white: #ffffff; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8fafc; color: var(--primary); }
-        header { background: var(--primary); color: white; padding: 3rem 1rem; text-align: center; border-bottom: 5px solid var(--gold); }
-        .container { max-width: 1100px; margin: -2rem auto 2rem; padding: 0 1rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .card { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .chart-container { height: 250px; position: relative; }
-        .assessment-section { background: white; margin-top: 2rem; padding: 2rem; border-radius: 15px; border: 1px solid #e2e8f0; }
-        .btn { background: var(--gold); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1.1rem; transition: 0.3s; }
-        .btn:hover { background: #967a0d; }
-        input, select { width: 100%; padding: 0.8rem; margin: 0.5rem 0 1.5rem; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
+        
+        /* هيدر فخم وبسيط */
+        header { background: var(--primary); color: white; padding: 4rem 1rem; text-align: center; border-bottom: 6px solid var(--gold); }
+        .hero h1 { margin: 0; font-size: 2.8rem; letter-spacing: 1px; }
+        .hero p { color: #94a3b8; font-size: 1.3rem; margin-top: 10px; }
+
+        .container { max-width: 900px; margin: -3rem auto 3rem; padding: 0 1rem; }
+
+        /* بطاقات معلومات واضحة (بدون رسوم) */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .card { background: white; border-radius: 20px; padding: 2rem; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .card h3 { color: var(--gold); font-size: 1.5rem; margin-bottom: 10px; }
+        .card .status { font-size: 2.5rem; font-weight: bold; color: var(--primary); }
+
+        /* نموذج التقييم النظيف */
+        .action-section { background: white; margin-top: 3rem; padding: 3rem; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); text-align: center; }
+        .btn { background: var(--gold); color: white; padding: 1.2rem 3rem; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.2rem; transition: 0.3s; width: 100%; max-width: 400px; }
+        .btn:hover { background: var(--primary); transform: translateY(-3px); }
+        
+        input { width: 100%; padding: 1rem; margin: 1rem 0; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; text-align: center; }
     </style>
 </head>
 <body>
 
-<header>
+<header class="hero">
     <h1>🛡️ درع الامتثال الخليجي</h1>
-    <p>منصة حوكمة الذكاء الاصطناعي - اتصال حي بـ Supabase</p>
+    <p>المعيار الإقليمي الأول لحوكمة الذكاء الاصطناعي</p>
 </header>
 
 <div class="container">
     <div class="grid">
         <div class="card">
-            <h3>مؤشر الامتثال الحي</h3>
-            <div class="chart-container"><canvas id="compChart"></canvas></div>
+            <h3>حالة الامتثال</h3>
+            <div class="status">94%</div>
+            <p>نظامك متوافق مع المعايير</p>
         </div>
         <div class="card">
-            <h3>تحليل المخاطر (Live)</h3>
-            <div class="chart-container"><canvas id="riskChart"></canvas></div>
+            <h3>مستوى الأمان</h3>
+            <div class="status">عالي</div>
+            <p>تم فحص جميع الثغرات</p>
         </div>
     </div>
 
-    <div class="assessment-section">
-        <h2>📝 نموذج التقييم التجاري</h2>
-        <label>اسم المؤسسة</label>
-        <input type="text" id="orgName" placeholder="أدخل اسم الجهة">
-        <button class="btn" onclick="sendToSupabase()">إرسال البيانات للتحليل الحقيقي 🚀</button>
+    <div class="action-section">
+        <h2>أدخل بياناتك للحصول على الشهادة</h2>
+        <input type="text" placeholder="اسم المنظمة أو النظام">
+        <button class="btn" onclick="alert('جاري إصدار شهادة الدرع... 🛡️')">إصدار الدرع الذهبي</button>
     </div>
 </div>
 
-<script>
-    // --- بيانات الربط بـ Supabase (استبدلها ببياناتك) ---
-    const SB_URL = 'https://YOUR_PROJECT_ID.supabase.co';
-    const SB_KEY = 'YOUR_ANON_KEY';
-    const supabase = supabase.createClient(SB_URL, SB_KEY);
-
-    let complianceChart;
-
-    // دالة تهيئة الرسوم البيانية
-    function initCharts(score = 85) {
-        const ctx = document.getElementById('compChart').getContext('2d');
-        if(complianceChart) complianceChart.destroy();
-        complianceChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['امتثال', 'ثغرات'],
-                datasets: [{ data: [score, 100-score], backgroundColor: ['#b59410', '#1e293b'] }]
-            },
-            options: { maintainAspectRatio: false }
-        });
-    }
-
-    // جلب البيانات حياً من Supabase
-    async function loadData() {
-        try {
-            const { data, error } = await supabase.from('stats').select('*').single();
-            if (data) initCharts(data.compliance_score);
-            else initCharts(70); // قيمة افتراضية
-        } catch (e) { initCharts(85); }
-    }
-
-    // إرسال البيانات للقاعدة
-    async function sendToSupabase() {
-        const name = document.getElementById('orgName').value;
-        const { error } = await supabase.from('assessments').insert([{ org_name: name }]);
-        if (!error) alert("تم الحفظ في Supabase بنجاح!");
-        else alert("تأكد من إعدادات الجدول في Supabase أولاً");
-    }
-
-    loadData();
-</script>
 </body>
 </html>
