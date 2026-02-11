@@ -3,118 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة درع الامتثال الخليجي | التجاري</title>
+    <title>درع الامتثال الخليجي - GCC Shield</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root { --primary: #1a365d; --secondary: #2c5282; --accent: #38b2ac; --bg: #f7fafc; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; display: flex; }
+        :root { --primary: #0f172a; --gold: #b59410; --white: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8fafc; color: var(--primary); }
         
-        /* شريط جانبي (Sidebar) */
-        .sidebar { width: 250px; background: var(--primary); color: white; height: 100vh; position: fixed; padding: 1rem; }
-        .sidebar h2 { font-size: 1.2rem; border-bottom: 1px solid #ffffff33; padding-bottom: 1rem; }
-        .nav-link { display: block; color: white; padding: 1rem; text-decoration: none; cursor: pointer; border-radius: 8px; margin: 0.5rem 0; }
-        .nav-link:hover { background: var(--secondary); }
+        /* الهيدر الاحترافي */
+        header { background: var(--primary); color: white; padding: 3rem 1rem; text-align: center; border-bottom: 5px solid var(--gold); }
+        .hero h1 { margin: 0; font-size: 2.5rem; }
+        .hero p { color: #94a3b8; font-size: 1.2rem; }
+
+        .container { max-width: 1100px; margin: -2rem auto 2rem; padding: 0 1rem; }
+
+        /* البطاقات الذكية */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         
-        /* المحتوى الرئيسي */
-        .main-content { margin-right: 250px; width: calc(100% - 250px); padding: 2rem; }
-        .page { display: none; } /* إخفاء الصفحات افتراضياً */
-        .page.active { display: block; } /* إظهار الصفحة النشطة فقط */
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        canvas { max-width: 100%; height: 250px !important; }
-        
-        /* نظام النماذج */
-        .form-group { margin-bottom: 1rem; }
-        input, select, button { width: 100%; padding: 0.8rem; margin-top: 0.5rem; border-radius: 5px; border: 1px solid #ddd; }
-        button { background: var(--accent); color: white; border: none; cursor: pointer; font-weight: bold; }
+        /* الرسوم البيانية داخل البطاقات */
+        .chart-container { height: 200px; margin-top: 1rem; }
+
+        /* نموذج التقييم (التجاري) */
+        .assessment-section { background: white; margin-top: 2rem; padding: 2rem; border-radius: 15px; border: 1px solid #e2e8f0; }
+        .btn { background: var(--gold); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1.1rem; }
+        input, select { width: 100%; padding: 0.8rem; margin: 0.5rem 0 1.5rem; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <h2>🛡️ درع الامتثال</h2>
-    <div class="nav-link" onclick="showPage('dashboard')">🏠 لوحة التحكم</div>
-    <div class="nav-link" onclick="showPage('reports')">📊 تقارير الدول</div>
-    <div class="nav-link" onclick="showPage('assess')">📝 نموذج التقييم</div>
-    <div class="nav-link" onclick="showPage('about')">ℹ️ عن المنصة</div>
-</div>
+<header class="hero">
+    <h1>🛡️ درع الامتثال الخليجي</h1>
+    <p>منصة تقييم وحوكمة أنظمة الذكاء الاصطناعي</p>
+</header>
 
-<div class="main-content">
-    
-    <div id="dashboard" class="page active">
-        <h1>مؤشرات الامتثال الحية</h1>
-        <div class="stats-grid">
-            <div class="card">
-                <h3>نسبة الامتثال الإجمالية</h3>
-                <canvas id="complianceChart"></canvas>
+<div class="container">
+    <div class="grid">
+        <div class="card">
+            <h3>مؤشر الامتثال الحي</h3>
+            <div class="chart-container">
+                <canvas id="compChart"></canvas>
             </div>
-            <div class="card">
-                <h3>توزيع المخاطر</h3>
+        </div>
+
+        <div class="card">
+            <h3>تحليل المخاطر المباشر</h3>
+            <div class="chart-container">
                 <canvas id="riskChart"></canvas>
             </div>
         </div>
     </div>
 
-    <div id="assess" class="page">
-        <h1>نموذج تقييم مخاطر الذكاء الاصطناعي</h1>
-        <div class="card">
-            <div class="form-group">
-                <label>اسم المؤسسة</label>
-                <input type="text" placeholder="أدخل اسم الجهة">
-            </div>
-            <div class="form-group">
-                <label>نوع نظام الذكاء الاصطناعي</label>
-                <select>
-                    <option>نظام توليدي (Generative)</option>
-                    <option>نظام تشخيصي (Diagnostic)</option>
-                </select>
-            </div>
-            <button onclick="alert('تم إرسال البيانات للمعالجة حياً')">بدء التحليل</button>
-        </div>
-    </div>
+    <div class="assessment-section">
+        <h2>📝 ابدأ تقييم نظامك الآن</h2>
+        <p>قم بتعبئة البيانات للحصول على شهادة الامتثال الفورية.</p>
+        <label>اسم النظام / المؤسسة</label>
+        <input type="text" placeholder="مثال: نظام خدمة العملاء الذكي">
+        
+        <label>نطاق الاستخدام</label>
+        <select>
+            <option>القطاع الحكومي</option>
+            <option>القطاع الصحي</option>
+            <option>القطاع المالي</option>
+        </select>
 
-    <div id="reports" class="page">
-        <h1>تقارير الدول الأعضاء</h1>
-        <div class="card">
-            <p>هنا تظهر البيانات التفصيلية لكل دولة بناءً على المعايير الوطنية.</p>
-        </div>
+        <button class="btn" onclick="process()">تحليل البيانات وإصدار الدرع 🛡️</button>
     </div>
-
 </div>
 
 <script>
-    // نظام التنقل بين الصفحات
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-    }
-
-    // الرسوم البيانية (Charts)
-    const ctx1 = document.getElementById('complianceChart').getContext('2d');
-    new Chart(ctx1, {
+    // رسم بياني دائري للامتثال
+    new Chart(document.getElementById('compChart'), {
         type: 'doughnut',
         data: {
-            labels: ['ممتثل', 'غير ممتثل'],
-            datasets: [{
-                data: [94, 6],
-                backgroundColor: ['#38b2ac', '#e53e3e']
-            }]
-        }
+            labels: ['امتثال', 'ثغرات'],
+            datasets: [{ data: [85, 15], backgroundColor: ['#b59410', '#1e293b'] }]
+        },
+        options: { maintainAspectRatio: false }
     });
 
-    const ctx2 = document.getElementById('riskChart').getContext('2d');
-    new Chart(ctx2, {
+    // رسم بياني للأعمدة للمخاطر
+    new Chart(document.getElementById('riskChart'), {
         type: 'bar',
         data: {
-            labels: ['تقني', 'قانوني', 'أخلاقي'],
-            datasets: [{
-                label: 'مستوى المخاطر',
-                data: [12, 19, 3],
-                backgroundColor: '#2c5282'
-            }]
-        }
+            labels: ['أخلاقي', 'قانوني', 'تقني'],
+            datasets: [{ label: 'مستوى الأمان', data: [90, 75, 88], backgroundColor: '#334155' }]
+        },
+        options: { maintainAspectRatio: false }
     });
+
+    function process() {
+        alert("جاري الاتصال بـ Supabase لتحليل البيانات... تم إصدار تقرير أولي بنسبة امتثال 88%");
+    }
 </script>
 
 </body>
