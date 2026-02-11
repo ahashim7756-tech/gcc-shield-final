@@ -3,98 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>درع الامتثال الخليجي - GCC Shield</title>
+    <title>درع الامتثال الخليجي - نظام حي</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root { --primary: #0f172a; --gold: #b59410; --white: #ffffff; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8fafc; color: var(--primary); }
-        
-        /* الهيدر الاحترافي */
         header { background: var(--primary); color: white; padding: 3rem 1rem; text-align: center; border-bottom: 5px solid var(--gold); }
-        .hero h1 { margin: 0; font-size: 2.5rem; }
-        .hero p { color: #94a3b8; font-size: 1.2rem; }
-
         .container { max-width: 1100px; margin: -2rem auto 2rem; padding: 0 1rem; }
-
-        /* البطاقات الذكية */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .card { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        
-        /* الرسوم البيانية داخل البطاقات */
-        .chart-container { height: 200px; margin-top: 1rem; }
-
-        /* نموذج التقييم (التجاري) */
+        .card { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .chart-container { height: 250px; position: relative; }
         .assessment-section { background: white; margin-top: 2rem; padding: 2rem; border-radius: 15px; border: 1px solid #e2e8f0; }
-        .btn { background: var(--gold); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1.1rem; }
+        .btn { background: var(--gold); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1.1rem; transition: 0.3s; }
+        .btn:hover { background: #967a0d; }
         input, select { width: 100%; padding: 0.8rem; margin: 0.5rem 0 1.5rem; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-<header class="hero">
+<header>
     <h1>🛡️ درع الامتثال الخليجي</h1>
-    <p>منصة تقييم وحوكمة أنظمة الذكاء الاصطناعي</p>
+    <p>منصة حوكمة الذكاء الاصطناعي - اتصال حي بـ Supabase</p>
 </header>
 
 <div class="container">
     <div class="grid">
         <div class="card">
             <h3>مؤشر الامتثال الحي</h3>
-            <div class="chart-container">
-                <canvas id="compChart"></canvas>
-            </div>
+            <div class="chart-container"><canvas id="compChart"></canvas></div>
         </div>
-
         <div class="card">
-            <h3>تحليل المخاطر المباشر</h3>
-            <div class="chart-container">
-                <canvas id="riskChart"></canvas>
-            </div>
+            <h3>تحليل المخاطر (Live)</h3>
+            <div class="chart-container"><canvas id="riskChart"></canvas></div>
         </div>
     </div>
 
     <div class="assessment-section">
-        <h2>📝 ابدأ تقييم نظامك الآن</h2>
-        <p>قم بتعبئة البيانات للحصول على شهادة الامتثال الفورية.</p>
-        <label>اسم النظام / المؤسسة</label>
-        <input type="text" placeholder="مثال: نظام خدمة العملاء الذكي">
-        
-        <label>نطاق الاستخدام</label>
-        <select>
-            <option>القطاع الحكومي</option>
-            <option>القطاع الصحي</option>
-            <option>القطاع المالي</option>
-        </select>
-
-        <button class="btn" onclick="process()">تحليل البيانات وإصدار الدرع 🛡️</button>
+        <h2>📝 نموذج التقييم التجاري</h2>
+        <label>اسم المؤسسة</label>
+        <input type="text" id="orgName" placeholder="أدخل اسم الجهة">
+        <button class="btn" onclick="sendToSupabase()">إرسال البيانات للتحليل الحقيقي 🚀</button>
     </div>
 </div>
 
 <script>
-    // رسم بياني دائري للامتثال
-    new Chart(document.getElementById('compChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['امتثال', 'ثغرات'],
-            datasets: [{ data: [85, 15], backgroundColor: ['#b59410', '#1e293b'] }]
-        },
-        options: { maintainAspectRatio: false }
-    });
+    // --- بيانات الربط بـ Supabase (استبدلها ببياناتك) ---
+    const SB_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+    const SB_KEY = 'YOUR_ANON_KEY';
+    const supabase = supabase.createClient(SB_URL, SB_KEY);
 
-    // رسم بياني للأعمدة للمخاطر
-    new Chart(document.getElementById('riskChart'), {
-        type: 'bar',
-        data: {
-            labels: ['أخلاقي', 'قانوني', 'تقني'],
-            datasets: [{ label: 'مستوى الأمان', data: [90, 75, 88], backgroundColor: '#334155' }]
-        },
-        options: { maintainAspectRatio: false }
-    });
+    let complianceChart;
 
-    function process() {
-        alert("جاري الاتصال بـ Supabase لتحليل البيانات... تم إصدار تقرير أولي بنسبة امتثال 88%");
+    // دالة تهيئة الرسوم البيانية
+    function initCharts(score = 85) {
+        const ctx = document.getElementById('compChart').getContext('2d');
+        if(complianceChart) complianceChart.destroy();
+        complianceChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['امتثال', 'ثغرات'],
+                datasets: [{ data: [score, 100-score], backgroundColor: ['#b59410', '#1e293b'] }]
+            },
+            options: { maintainAspectRatio: false }
+        });
     }
-</script>
 
+    // جلب البيانات حياً من Supabase
+    async function loadData() {
+        try {
+            const { data, error } = await supabase.from('stats').select('*').single();
+            if (data) initCharts(data.compliance_score);
+            else initCharts(70); // قيمة افتراضية
+        } catch (e) { initCharts(85); }
+    }
+
+    // إرسال البيانات للقاعدة
+    async function sendToSupabase() {
+        const name = document.getElementById('orgName').value;
+        const { error } = await supabase.from('assessments').insert([{ org_name: name }]);
+        if (!error) alert("تم الحفظ في Supabase بنجاح!");
+        else alert("تأكد من إعدادات الجدول في Supabase أولاً");
+    }
+
+    loadData();
+</script>
 </body>
 </html>
